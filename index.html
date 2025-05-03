@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="weather.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&family=Lexend+Peta:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Weather</title>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <div id="search">
+                <input type="text" id="input" placeholder="Enter city name">
+            </div>
+            <div id="search_logo">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div id="weather_display1">
+                <div id="city">City name</div>
+                <div id="temp">temp°C</div>
+            </div>
+            <div id="weather_display2">
+                <div id="humid_logo">
+                    Humidity <i class="fa-solid fa-droplet"></i>
+                </div>
+                <div id="humid_val"></div>
+            </div>
+            <div id="weather_display3">
+                <div id="wind_logo">
+                    Wind Speed(km/h)<br>
+                    <i class="fa-solid fa-wind"></i>
+                </div>
+                <div id="wind_val"></div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    const apikey="4ccc228b8856b52b23591315684faa66";
+    const apiUrl =`https://api.openweathermap.org/data/2.5/weather?units=metric&q=`;
+        
+   
+
+    async function WeatherData(city){
+        const response= await fetch(apiUrl + city + `&appid=${apikey}`);
+        let data= await response.json();
+
+        document.querySelector("#city").textContent = data.name;
+        document.querySelector("#temp").textContent = Math.round(data.main.temp) + "°C";
+        document.querySelector("#humid_val").textContent = data.main.humidity + "%";
+        document.querySelector("#wind_val").textContent = data.wind.speed;
+    }
+    document.querySelector("#search_logo").addEventListener("click",()=>{
+        WeatherData(document.querySelector("#input").value);
+    });
+
+
+
+
+</script>
+</body> 
+</html>
